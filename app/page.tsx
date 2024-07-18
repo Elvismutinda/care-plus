@@ -1,9 +1,8 @@
-import PatientForm from "@/components/forms/PatientForm";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import PatientForm from "@/components/forms/PatientForm";
 
-export default function Home() {
+export default function Home({ searchParams }: SearchParamProps) {
   return (
     <div className="flex h-screen max-h-screen">
       {/* TODO: OTP Verification | Passkey Modal */}
