@@ -3,7 +3,6 @@
 import Image from "next/image";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -33,7 +32,6 @@ export enum FormFieldType {
 
 interface CustomProps {
   control: Control<any>;
-  fieldType: FormFieldType;
   name: string;
   label?: string;
   placeholder?: string;
@@ -44,6 +42,7 @@ interface CustomProps {
   showTimeSelect?: boolean;
   children?: React.ReactNode;
   renderSkeleton?: (field: any) => React.ReactNode;
+  fieldType: FormFieldType;
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
@@ -167,7 +166,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       );
 
     default:
-      break;
+      return null;
   }
 };
 
