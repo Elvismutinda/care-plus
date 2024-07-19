@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import PatientForm from "@/components/forms/PatientForm";
+import { PatientForm } from "@/components/forms/PatientForm";
 
-export default function Home({ searchParams }: SearchParamProps) {
+const Home = ({ searchParams }: SearchParamProps) => {
   return (
     <div className="flex h-screen max-h-screen">
       {/* TODO: OTP Verification | Passkey Modal */}
@@ -40,3 +40,5 @@ export default function Home({ searchParams }: SearchParamProps) {
     </div>
   );
 }
+
+export default Home;
