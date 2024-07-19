@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 import "react-phone-number-input/style.css";
 
-const PatientForm = () => {
+export const PatientForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -41,7 +41,7 @@ const PatientForm = () => {
         router.push(`/patients/${newUser.$id}/register`);
       }
 
-      console.log(userData);
+      // console.log(userData);
       // console.log({ newUser });
     } catch (error) {
       console.log(error);
@@ -91,5 +91,3 @@ const PatientForm = () => {
     </Form>
   );
 };
-
-export default PatientForm;
