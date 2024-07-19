@@ -30,9 +30,9 @@ const RegisterForm = ({ user }: { user: User }) => {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...patientFormDefaultValues,
-      name: "",
-      email: "",
-      phone: "",
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
     },
   });
 
@@ -44,7 +44,7 @@ const RegisterForm = ({ user }: { user: User }) => {
 
     if (
       values.identificationDocument &&
-      values.identificationDocument.length > 0
+      values.identificationDocument?.length > 0
     ) {
       const blobFile = new Blob([values.identificationDocument[0]], {
         type: values.identificationDocument[0].type,
@@ -57,16 +57,34 @@ const RegisterForm = ({ user }: { user: User }) => {
 
     try {
       const patientData = {
-        ...values,
         userId: user.$id,
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
         birthDate: new Date(values.birthDate),
-        identificationDocument: formData,
+        gender: values.gender,
+        address: values.address,
+        occupation: values.occupation,
+        emergencyContactName: values.emergencyContactName,
+        emergencyContactNumber: values.emergencyContactNumber,
+        primaryPhysician: values.primaryPhysician,
+        insuranceProvider: values.insuranceProvider,
+        insurancePolicyNumber: values.insurancePolicyNumber,
+        allergies: values.allergies,
+        currentMedication: values.currentMedication,
+        familyMedicalHistory: values.familyMedicalHistory,
+        pastMedicalHistory: values.pastMedicalHistory,
+        identificationType: values.identificationType,
+        identificationNumber: values.identificationNumber,
+        identificationDocument: values.identificationDocument
+          ? formData
+          : undefined,
+        privacyConsent: values.privacyConsent,
       };
 
-      // @ts-ignore
-      const patient = await registerPatient(patientData);
+      const newPatient = await registerPatient(patientData);
 
-      if (patient) {
+      if (newPatient) {
         router.push(`/patients/${user.$id}/new-appointment`);
       }
     } catch (error) {
@@ -145,8 +163,8 @@ const RegisterForm = ({ user }: { user: User }) => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  {genderOptions.map((option) => (
-                    <div key={option} className="radio-group">
+                  {genderOptions.map((option, i) => (
+                    <div key={option + i} className="radio-group">
                       <RadioGroupItem value={option} id={option} />
                       <Label htmlFor={option} className="cursor-pointer">
                         {option}
@@ -208,9 +226,9 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="Primary care physician"
           placeholder="Select a Physician"
         >
-          {doctors.map((doctor) => (
+          {doctors.map((doctor, i) => (
             <div>
-              <SelectItem key={doctor.name} value={doctor.name}>
+              <SelectItem key={doctor.name + i} value={doctor.name}>
                 <div className="flex cursor-pointer items-center gap-2">
                   <Image
                     src={doctor.image}
@@ -293,9 +311,9 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="Identification type"
           placeholder="Select an Identification type"
         >
-          {identificationTypes.map((type) => (
+          {identificationTypes.map((type, i) => (
             <div>
-              <SelectItem key={type} value={type}>
+              <SelectItem key={type + i} value={type}>
                 {type}
               </SelectItem>
             </div>
@@ -346,7 +364,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           fieldType={FormFieldType.CHECKBOX}
           control={form.control}
           name="privacyConsent"
-          label="I acknowledge I have reviewed and agree to the privacy policy."
+          label="I acknowledge that I have reviewed and agree to the privacy policy."
         />
 
         <SubmitButton isLoading={isLoading}>Submit and continue</SubmitButton>
