@@ -11,7 +11,7 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "CarePlus",
+  title: "CarePulse",
   description:
     "A Healthcare Patient Management System designed to streamline patient registration, appointment scheduling, and medical records management for healthcare providers.",
   icons: {
